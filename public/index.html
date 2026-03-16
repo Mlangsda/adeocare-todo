@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adeocare — Todo-lista</title>
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🔒</text></svg>">
+<style>
+  :root {
+    --bg: #f0eaf5;
+    --card: #ffffff;
+    --card-hover: #f8f4fc;
+    --border: #d8cee6;
+    --text: #2d2440;
+    --text-secondary: #7a6b8a;
+    --accent: #8b6aaf;
+    --accent-hover: #7a5a9e;
+    --green: #5cb87a;
+    --section-bg: #ece4f3;
+    --checked-bg: #f6f3f9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(180deg, #ddd0f0 0%, #e6daf0 30%, #f0eaf5 60%, #f7f2fa 100%);
+    min-height: 100vh;
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  header {
+    text-align: left;
+    margin-bottom: 40px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .logo-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #8b6aaf 0%, #b794d6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(139,106,175,0.3);
+    aspect-ratio: 1/1;
+  }
+
+  .logo-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .logo-text {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  header p {
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  .progress-bar {
+    background: var(--border);
+    border-radius: 10px;
+    height: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #b794d6);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 36px;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 0 4px;
+  }
+
+  .section-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+
+  .section-count {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-left: auto;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(45,36,64,0.06);
+  }
+
+  .card:hover {
+    background: var(--card-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(45,36,64,0.1);
+  }
+
+  .card.checked {
+    opacity: 0.45;
+    background: var(--checked-bg);
+  }
+
+  .card.checked:hover {
+    opacity: 0.6;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .checkbox {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    background: white;
+  }
+
+  .card.checked .checkbox {
+    background: var(--green);
+    border-color: var(--green);
+  }
+
+  .checkbox svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card.checked .checkbox svg {
+    opacity: 1;
+  }
+
+  .card-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .card.checked .card-title {
+    text-decoration: line-through;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+    font-weight: 500;
+  }
+
+  .tag-daily {
+    background: rgba(92,184,122,0.1);
+    color: #4a9e64;
+  }
+
+  .tag-weekly {
+    background: rgba(232,168,64,0.1);
+    color: #c89030;
+  }
+
+  .tag-shop {
+    background: rgba(139,106,175,0.1);
+    color: var(--accent);
+  }
+
+  .tag-important {
+    background: rgba(212,80,80,0.1);
+    color: #d45050;
+  }
+
+  /* Add card button */
+  .add-card-btn {
+    background: none;
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+  }
+
+  .add-card-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(139,106,175,0.04);
+  }
+
+  .add-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--section-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .add-card-btn:hover .add-icon {
+    background: rgba(139,106,175,0.15);
+  }
+
+  /* Editable card */
+  .card.editing {
+    cursor: default;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(139,106,175,0.15);
+  }
+
+  .card.editing:hover {
+    transform: none;
+  }
+
+  .edit-title {
+    width: 100%;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--text);
+    background: none;
+    outline: none;
+    margin-bottom: 4px;
+  }
+
+  .edit-title::placeholder {
+    color: var(--border);
+  }
+
+  .edit-desc {
+    width: 100%;
+    border: none;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--text-secondary);
+    background: none;
+    outline: none;
+    resize: none;
+    line-height: 1.5;
+    min-height: 20px;
+  }
+
+  .edit-desc::placeholder {
+    color: var(--border);
+  }
+
+  .edit-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .edit-actions button {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+
+  .btn-save {
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+  }
+
+  .btn-save:hover {
+    background: var(--accent-hover);
+  }
+
+  .btn-cancel {
+    background: var(--section-bg);
+    color: var(--text-secondary);
+  }
+
+  .btn-cancel:hover {
+    background: var(--border);
+  }
+
+  .btn-delete {
+    margin-left: auto;
+    background: none;
+    color: var(--border);
+    font-size: 12px;
+  }
+
+  .btn-delete:hover {
+    color: #d45050;
+    background: rgba(212,80,80,0.08);
+  }
+
+  .card-delete {
+    opacity: 0.25;
+    flex-shrink: 0;
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: -2px;
+  }
+
+  .card:hover .card-delete {
+    opacity: 0.5;
+  }
+
+  .card-delete:hover {
+    opacity: 1 !important;
+    background: rgba(212,80,80,0.08);
+  }
+
+  .card-delete:hover svg circle,
+  .card-delete:hover svg line {
+    stroke: #d45050;
+  }
+
+  .card-delete:hover svg circle[fill] {
+    fill: #d45050;
+  }
+
+  .card-delete svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .card .card-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .card-edit-hint {
+    opacity: 0;
+    font-size: 11px;
+    color: var(--text-secondary);
+    transition: opacity 0.2s;
+    padding: 2px 6px;
+    cursor: pointer;
+  }
+
+  .card:hover .card-edit-hint {
+    opacity: 0.6;
+  }
+
+  /* Info card style */
+  .card.info-card {
+    cursor: default;
+    border-left: 3px solid var(--accent);
+  }
+
+  .card.info-card:hover {
+    transform: none;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px 20px 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 700px) {
+    .container { padding: 24px 16px 60px; }
+    header h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 3C10.5 3 8.5 5 8.5 7.5V10H7C5.9 10 5 10.9 5 12V21C5 22.1 5.9 23 7 23H19C20.1 23 21 22.1 21 21V12C21 10.9 20.1 10 19 10H17.5V7.5C17.5 5 15.5 3 13 3ZM13 5.5C14.1 5.5 15 6.4 15 7.5V10H11V7.5C11 6.4 11.9 5.5 13 5.5Z" fill="white" opacity="0.9"/>
+          <circle cx="13" cy="16.5" r="2" fill="white" opacity="0.7"/>
+        </svg>
+      </div>
+      <span class="logo-text">Privat</span>
+    </div>
+    <h1>Adeocare — Todo-lista</h1>
+    <p>Inköp och rutiner för Adeo Care-personalen</p>
+  </header>
+
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+  <div class="progress-text" id="progressText">0 av 0 klara</div>
+
+  <!-- INKÖP -->
+  <div class="section" data-section="inkop">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(139,106,175,0.1);">🛒</div>
+      <span class="section-title">Inköpslista</span>
+    </div>
+    <div class="cards-container">
+
+      <div class="card info-card" data-id="inkop-info">
+        <div class="card-top">
+          <div class="card-content">
+            <div class="card-title">Kolla alltid i kylen/frysen/skåpen innan ni handlar</div>
+            <div class="card-desc">Undvik dubbletter. Handla på onsdagar — inte tisdagar och torsdagar då Håkan har träning.</div>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('inkop-info')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('inkop-info')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="frukost" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Frukostvaror</div>
+            <div class="card-desc">Se bilder på köksbänken (mån–sön). Handla så det räcker för veckan.</div>
+            <span class="card-tag tag-weekly">Veckovis</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('frukost')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('frukost')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="froknacke" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Fröknäcke</div>
+            <div class="card-desc">Se bild på diskbänken.</div>
+            <span class="card-tag tag-shop">Kolla om slut</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('froknacke')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('froknacke')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="ost" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Skivad Edamer/Gouda</div>
+            <span class="card-tag tag-shop">Kolla om slut</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('ost')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('ost')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="glass" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Glass</div>
+            <span class="card-tag tag-shop">Kolla om slut</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('glass')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('glass')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="frukt" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Frukt</div>
+            <div class="card-desc">Kolla först att det inte ligger massa gammalt i fruktskålen i köket — släng gammalt.</div>
+            <span class="card-tag tag-shop">Kolla om slut</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('frukt')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('frukt')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="matavfall" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Matavfallspåsar</div>
+            <span class="card-tag tag-shop">Kolla om slut</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('matavfall')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('matavfall')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="juice" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Apelsinjuice Brämhults</div>
+            <div class="card-desc">Någon gång ibland.</div>
+            <span class="card-tag tag-shop">Kolla om slut</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('juice')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('juice')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="cola" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Cola Zero (utan socker)</div>
+            <div class="card-desc">Undvik vanlig Coca-Cola. Köp bara om Håkan vill ha.</div>
+            <span class="card-tag tag-important">Obs: bara sockerfri</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('cola')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('cola')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="cortimyk" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Cortimyk salva (apoteket)</div>
+            <div class="card-desc">Receptfritt. Köp om salvan är slut.</div>
+            <span class="card-tag tag-shop">Kolla om slut</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('cortimyk')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('cortimyk')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="toapapper" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Toapapper</div>
+            <div class="card-desc">Skåpet ovanför tvättmaskinen.</div>
+            <span class="card-tag tag-shop">Kolla om slut</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('toapapper')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('toapapper')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="hushallspapper" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Hushållspapper</div>
+            <div class="card-desc">Skåpet i hallen högst upp — bredvid ingången, svarta korgar.</div>
+            <span class="card-tag tag-shop">Kolla om slut</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('hushallspapper')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('hushallspapper')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="hygien" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Tandkräm + flytande tvål</div>
+            <div class="card-desc">Badrumsskåpet.</div>
+            <span class="card-tag tag-shop">Kolla om slut</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('hygien')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('hygien')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="tvattmedel" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Tvättmedel + sköljmedel</div>
+            <div class="card-desc">Badrumsskåpet.</div>
+            <span class="card-tag tag-shop">Kolla om slut</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('tvattmedel')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('tvattmedel')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <button class="add-card-btn" onclick="showAddForm(this, 'inkop')">
+      <span class="add-icon">+</span> Lägg till vara
+    </button>
+  </div>
+
+  <!-- DAGLIGA TO-DOS -->
+  <div class="section" data-section="daily">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(92,184,122,0.1);">📋</div>
+      <span class="section-title">Dagliga rutiner</span>
+    </div>
+    <div class="cards-container">
+
+      <div class="card" data-id="mobil-laddad" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Kolla att mobiltelefonen är laddad minst 40%</div>
+            <span class="card-tag tag-daily">Varje dag</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('mobil-laddad')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('mobil-laddad')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="rena-klader" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Kolla rena underkläder/strumpor/vit t-shirt</div>
+            <div class="card-desc">Finns i vita byrån i sovrummet.</div>
+            <span class="card-tag tag-daily">Varje dag</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('rena-klader')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('rena-klader')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="sopor" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Sopsortering och matavfall</div>
+            <div class="card-desc">Kolla i den mån det går. Kasta sopor om det behövs.</div>
+            <span class="card-tag tag-daily">Löpande</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('sopor')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('sopor')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="tork-tvatt" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Kolla torktumlaren/tvättmaskinen</div>
+            <div class="card-desc">Kolla om något inte ligger kvar. Kika att filter i torktumlaren är ren (den lilla och den större på utsidan av tumlaren).</div>
+            <span class="card-tag tag-daily">Löpande</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('tork-tvatt')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('tork-tvatt')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <button class="add-card-btn" onclick="showAddForm(this, 'daily')">
+      <span class="add-icon">+</span> Lägg till rutin
+    </button>
+  </div>
+
+  <!-- VECKOSCHEMA -->
+  <div class="section" data-section="weekly">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(232,168,64,0.1);">📅</div>
+      <span class="section-title">Veckoschema</span>
+    </div>
+    <div class="cards-container">
+
+      <div class="card" data-id="traning-tisdag" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Tisdag — Packa träningsväska</div>
+            <div class="card-desc">Håkan har träning kl 12.</div>
+            <span class="card-tag tag-weekly">Varje tisdag</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('traning-tisdag')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('traning-tisdag')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="handla-onsdag" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Onsdag — Handla matvaror</div>
+            <div class="card-desc">Handla BARA på onsdagar — inte tisdag/torsdag (träningsdagar). Kolla i skåpen så ni inte handlar dubbletter!</div>
+            <span class="card-tag tag-weekly">Varje onsdag</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('handla-onsdag')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('handla-onsdag')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="dos-onsdag" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Onsdag (ojämna veckor) — Hämta Dos Påse</div>
+            <div class="card-desc">Apoteket på Karolinska Sjukhuset, huvudingången. Dosrullen ska placeras i lilla beige necessären på köksbordet.</div>
+            <span class="card-tag tag-weekly">Varannan onsdag (ojämna veckor)</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('dos-onsdag')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('dos-onsdag')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="tvatt-ljus" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Onsdag (jämna veckor) — Tvätta sängkläder + ljusa kläder</div>
+            <span class="card-tag tag-weekly">Varannan onsdag (jämna veckor)</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('tvatt-ljus')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('tvatt-ljus')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="traning-torsdag" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Torsdag — Packa träningsväska</div>
+            <div class="card-desc">Håkan har träning kl 12.</div>
+            <span class="card-tag tag-weekly">Varje torsdag</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('traning-torsdag')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('traning-torsdag')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="tvatt-mork" onclick="toggleCard(this)">
+        <div class="card-top">
+          <div class="checkbox"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="card-content">
+            <div class="card-title">Torsdag (jämna veckor) — Tvätta mörka kläder</div>
+            <span class="card-tag tag-weekly">Varannan torsdag (jämna veckor)</span>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('tvatt-mork')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('tvatt-mork')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <button class="add-card-btn" onclick="showAddForm(this, 'weekly')">
+      <span class="add-icon">+</span> Lägg till uppgift
+    </button>
+  </div>
+
+  <!-- VIKTIGT ATT TÄNKA PÅ -->
+  <div class="section" data-section="info">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(212,80,80,0.1);">⚠️</div>
+      <span class="section-title">Viktigt att tänka på</span>
+    </div>
+    <div class="cards-container">
+
+      <div class="card info-card" data-id="vaska-info">
+        <div class="card-top">
+          <div class="card-content">
+            <div class="card-title">Håkans blå läder axelremsväska</div>
+            <div class="card-desc">Se till att Håkan INTE lägger saker i jackfickorna. I väskan ska alltid finnas: mobiltelefon, liten plånbok, och fastsatta hemnycklar.</div>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('vaska-info')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('vaska-info')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card info-card" data-id="kontakt-info">
+        <div class="card-top">
+          <div class="card-content">
+            <div class="card-title">Kontakt — Marzena Langsdale</div>
+            <div class="card-desc">Ring eller SMS:a vid minsta fråga. Marzena sitter ofta i möten — SMS är bäst. Tel: 070-6667922</div>
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('kontakt-info')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('kontakt-info')" title="Ta bort"></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <button class="add-card-btn" onclick="showAddForm(this, 'info')">
+      <span class="add-icon">+</span> Lägg till anteckning
+    </button>
+  </div>
+
+</div>
+
+<footer>Privat — sparas lokalt i din webbläsare</footer>
+
+<script>
+  const STORAGE_KEY = 'adeocare-todo-checklist';
+  const CUSTOM_KEY = 'adeocare-todo-custom-cards';
+  const DELETED_KEY = 'adeocare-todo-deleted-cards';
+  const EDITS_KEY = 'adeocare-todo-edited-cards';
+  const CHECK_SVG = '<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const DELETE_SVG = '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="4.5" y1="4.5" x2="11.5" y2="11.5" stroke="#c4b8d4" stroke-width="1.3" stroke-linecap="round"/><line x1="11.5" y1="4.5" x2="4.5" y2="11.5" stroke="#c4b8d4" stroke-width="1.3" stroke-linecap="round"/><circle cx="4.5" cy="4.5" r="1" fill="#c4b8d4"/><circle cx="11.5" cy="4.5" r="1" fill="#c4b8d4"/><circle cx="4.5" cy="11.5" r="1" fill="#c4b8d4"/><circle cx="11.5" cy="11.5" r="1" fill="#c4b8d4"/></svg>';
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+    catch { return {}; }
+  }
+
+  function saveState(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function loadCustomCards() {
+    try { return JSON.parse(localStorage.getItem(CUSTOM_KEY)) || []; }
+    catch { return []; }
+  }
+
+  function saveCustomCards(cards) {
+    localStorage.setItem(CUSTOM_KEY, JSON.stringify(cards));
+  }
+
+  function loadDeleted() {
+    try { return JSON.parse(localStorage.getItem(DELETED_KEY)) || []; }
+    catch { return []; }
+  }
+
+  function saveDeleted(arr) {
+    localStorage.setItem(DELETED_KEY, JSON.stringify(arr));
+  }
+
+  function loadEdits() {
+    try { return JSON.parse(localStorage.getItem(EDITS_KEY)) || {}; }
+    catch { return {}; }
+  }
+
+  function saveEdits(edits) {
+    localStorage.setItem(EDITS_KEY, JSON.stringify(edits));
+  }
+
+  function editCard(id) {
+    const card = document.querySelector(`.card[data-id="${id}"]`);
+    if (!card || card.classList.contains('editing')) return;
+
+    const currentTitle = card.querySelector('.card-title').textContent;
+    const currentDesc = card.querySelector('.card-desc') ? card.querySelector('.card-desc').textContent : '';
+    const hasCheckbox = !!card.querySelector('.checkbox');
+
+    card.className = 'card editing';
+    card.onclick = null;
+    card.innerHTML = `
+      <div class="card-top">
+        ${hasCheckbox ? '<div class="checkbox">' + CHECK_SVG + '</div>' : ''}
+        <div class="card-content">
+          <input class="edit-title" type="text" value="${escapeAttr(currentTitle)}" autofocus>
+          <textarea class="edit-desc" rows="1">${escapeHtml(currentDesc)}</textarea>
+          <div class="edit-actions">
+            <button class="btn-save" onclick="saveCardEdit('${id}')">Spara</button>
+            <button class="btn-cancel" onclick="cancelCardEdit('${id}')">Avbryt</button>
+            <button class="btn-delete" onclick="deleteAnyCard('${id}')">Ta bort</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const textarea = card.querySelector('.edit-desc');
+    textarea.style.height = textarea.scrollHeight + 'px';
+    textarea.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = this.scrollHeight + 'px';
+    });
+
+    card.querySelector('.edit-title').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); saveCardEdit(id); }
+      if (e.key === 'Escape') cancelCardEdit(id);
+    });
+
+    card.querySelector('.edit-title').focus();
+  }
+
+  function saveCardEdit(id) {
+    const card = document.querySelector(`.card[data-id="${id}"]`);
+    const title = card.querySelector('.edit-title').value.trim();
+    const desc = card.querySelector('.edit-desc').value.trim();
+    if (!title) { card.querySelector('.edit-title').focus(); return; }
+
+    const isCustom = id.startsWith('custom-');
+    const hasCheckbox = !!card.querySelector('.checkbox');
+    const section = card.closest('.section').dataset.section;
+    const isInfo = section === 'info' || card.classList.contains('info-card');
+
+    if (isCustom) {
+      const customs = loadCustomCards();
+      const data = customs.find(c => c.id === id);
+      if (data) { data.title = title; data.desc = desc; }
+      saveCustomCards(customs);
+    } else {
+      const edits = loadEdits();
+      edits[id] = { title, desc };
+      saveEdits(edits);
+    }
+
+    const state = loadState();
+    card.className = 'card' + (isCustom ? ' custom' : '') + (state[id] ? ' checked' : '') + (id.endsWith('-info') ? ' info-card' : '');
+    card.onclick = (hasCheckbox && !id.endsWith('-info')) ? function() { toggleCard(this); } : null;
+    card.innerHTML = `
+      <div class="card-top">
+        ${hasCheckbox ? '<div class="checkbox">' + CHECK_SVG + '</div>' : ''}
+        <div class="card-content">
+          <div class="card-title">${escapeHtml(title)}</div>
+          ${desc ? '<div class="card-desc">' + escapeHtml(desc) + '</div>' : ''}
+        </div>
+        <div class="card-actions">
+          <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('${id}')">redigera</span>
+          <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('${id}')" title="Ta bort">${DELETE_SVG}</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function cancelCardEdit(id) {
+    const card = document.querySelector(`.card[data-id="${id}"]`);
+    const section = card.closest('.section').dataset.section;
+    const isCustom = id.startsWith('custom-');
+    let title, desc;
+
+    if (isCustom) {
+      const customs = loadCustomCards();
+      const data = customs.find(c => c.id === id);
+      if (!data) return;
+      title = data.title;
+      desc = data.desc || '';
+    } else {
+      const edits = loadEdits();
+      if (edits[id]) {
+        title = edits[id].title;
+        desc = edits[id].desc || '';
+      } else {
+        title = card.querySelector('.edit-title').defaultValue;
+        desc = card.querySelector('.edit-desc').defaultValue;
+      }
+    }
+
+    const state = loadState();
+    const hasCheckbox = !!card.querySelector('.checkbox');
+    card.className = 'card' + (isCustom ? ' custom' : '') + (state[id] ? ' checked' : '') + (id.endsWith('-info') ? ' info-card' : '');
+    card.onclick = (hasCheckbox && !id.endsWith('-info')) ? function() { toggleCard(this); } : null;
+    card.innerHTML = `
+      <div class="card-top">
+        ${hasCheckbox ? '<div class="checkbox">' + CHECK_SVG + '</div>' : ''}
+        <div class="card-content">
+          <div class="card-title">${escapeHtml(title)}</div>
+          ${desc ? '<div class="card-desc">' + escapeHtml(desc) + '</div>' : ''}
+        </div>
+        <div class="card-actions">
+          <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('${id}')">redigera</span>
+          <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('${id}')" title="Ta bort">${DELETE_SVG}</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function deleteAnyCard(id) {
+    const card = document.querySelector(`.card[data-id="${id}"]`);
+    if (!card) return;
+
+    card.style.transition = 'opacity 0.3s, transform 0.3s';
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(20px)';
+    setTimeout(() => {
+      card.remove();
+      updateProgress();
+    }, 300);
+
+    let customs = loadCustomCards();
+    if (customs.find(c => c.id === id)) {
+      customs = customs.filter(c => c.id !== id);
+      saveCustomCards(customs);
+    } else {
+      const deleted = loadDeleted();
+      if (!deleted.includes(id)) deleted.push(id);
+      saveDeleted(deleted);
+      const edits = loadEdits();
+      delete edits[id];
+      saveEdits(edits);
+    }
+
+    const state = loadState();
+    delete state[id];
+    saveState(state);
+  }
+
+  function toggleCard(card) {
+    if (card.classList.contains('editing')) return;
+    const id = card.dataset.id;
+    if (!id) return;
+    const state = loadState();
+    state[id] = !state[id];
+    card.classList.toggle('checked', state[id]);
+    saveState(state);
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const checkableCards = document.querySelectorAll('.card[data-id]:not(.info-card)');
+    let total = 0;
+    checkableCards.forEach(c => {
+      if (c.querySelector('.checkbox')) total++;
+    });
+    const done = document.querySelectorAll('.card.checked[data-id]').length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = done + ' av ' + total + ' klara';
+  }
+
+  function showAddForm(btn, section) {
+    if (btn.previousElementSibling && btn.previousElementSibling.classList.contains('editing')) return;
+
+    const card = document.createElement('div');
+    card.className = 'card editing';
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="checkbox">${CHECK_SVG}</div>
+        <div class="card-content">
+          <input class="edit-title" type="text" placeholder="Vad ska göras?" autofocus>
+          <textarea class="edit-desc" placeholder="Detaljer (valfritt)" rows="1"></textarea>
+          <div class="edit-actions">
+            <button class="btn-save" onclick="saveNewCard(this, '${section}')">Spara</button>
+            <button class="btn-cancel" onclick="cancelAdd(this)">Avbryt</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const container = btn.closest('.section').querySelector('.cards-container');
+    container.appendChild(card);
+
+    const textarea = card.querySelector('.edit-desc');
+    textarea.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = this.scrollHeight + 'px';
+    });
+
+    card.querySelector('.edit-title').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        saveNewCard(card.querySelector('.btn-save'), section);
+      }
+      if (e.key === 'Escape') cancelAdd(card.querySelector('.btn-cancel'));
+    });
+
+    textarea.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') cancelAdd(card.querySelector('.btn-cancel'));
+    });
+
+    card.querySelector('.edit-title').focus();
+  }
+
+  function saveNewCard(btn, section) {
+    const card = btn.closest('.card');
+    const title = card.querySelector('.edit-title').value.trim();
+    const desc = card.querySelector('.edit-desc').value.trim();
+
+    if (!title) {
+      card.querySelector('.edit-title').focus();
+      return;
+    }
+
+    const id = 'custom-' + Date.now();
+
+    const customs = loadCustomCards();
+    customs.push({ id, title, desc, section });
+    saveCustomCards(customs);
+
+    card.className = 'card custom';
+    card.dataset.id = id;
+    card.onclick = function() { toggleCard(this); };
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="checkbox">${CHECK_SVG}</div>
+        <div class="card-content">
+          <div class="card-title">${escapeHtml(title)}</div>
+          ${desc ? '<div class="card-desc">' + escapeHtml(desc) + '</div>' : ''}
+        </div>
+        <div class="card-actions">
+          <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('${id}')">redigera</span>
+          <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('${id}')" title="Ta bort">${DELETE_SVG}</button>
+        </div>
+      </div>
+    `;
+
+    updateProgress();
+  }
+
+  function cancelAdd(btn) {
+    const card = btn.closest('.card');
+    card.remove();
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function escapeAttr(str) {
+    return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  // Restore state on load
+  (function() {
+    const state = loadState();
+    const deleted = loadDeleted();
+
+    // Inject delete SVG into all delete buttons
+    document.querySelectorAll('.card-delete').forEach(btn => {
+      btn.innerHTML = DELETE_SVG;
+    });
+
+    // Hide deleted built-in cards
+    deleted.forEach(id => {
+      const card = document.querySelector(`.card[data-id="${id}"]`);
+      if (card) card.remove();
+    });
+
+    // Apply saved edits to built-in cards
+    const edits = loadEdits();
+    Object.keys(edits).forEach(id => {
+      const card = document.querySelector(`.card[data-id="${id}"]`);
+      if (!card) return;
+      const titleEl = card.querySelector('.card-title');
+      const descEl = card.querySelector('.card-desc');
+      if (titleEl) titleEl.textContent = edits[id].title;
+      if (descEl && edits[id].desc) {
+        descEl.textContent = edits[id].desc;
+      } else if (!descEl && edits[id].desc) {
+        const newDesc = document.createElement('div');
+        newDesc.className = 'card-desc';
+        newDesc.textContent = edits[id].desc;
+        titleEl.after(newDesc);
+      } else if (descEl && !edits[id].desc) {
+        descEl.remove();
+      }
+    });
+
+    // Restore checked state for built-in cards
+    document.querySelectorAll('.card[data-id]').forEach(card => {
+      if (state[card.dataset.id]) card.classList.add('checked');
+    });
+
+    // Restore custom cards
+    const customs = loadCustomCards();
+    customs.forEach(data => {
+      const section = document.querySelector(`.section[data-section="${data.section}"]`);
+      if (!section) return;
+      const container = section.querySelector('.cards-container');
+
+      const card = document.createElement('div');
+      card.className = 'card custom' + (state[data.id] ? ' checked' : '');
+      card.dataset.id = data.id;
+      card.onclick = function() { toggleCard(this); };
+      card.innerHTML = `
+        <div class="card-top">
+          <div class="checkbox">${CHECK_SVG}</div>
+          <div class="card-content">
+            <div class="card-title">${escapeHtml(data.title)}</div>
+            ${data.desc ? '<div class="card-desc">' + escapeHtml(data.desc) + '</div>' : ''}
+          </div>
+          <div class="card-actions">
+            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('${data.id}')">redigera</span>
+            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('${data.id}')" title="Ta bort">${DELETE_SVG}</button>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    updateProgress();
+  })();
+</script>
+</body>
+</html>
