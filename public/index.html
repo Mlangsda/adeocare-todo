@@ -992,9 +992,9 @@
           <input class="edit-title" type="text" value="${escapeAttr(currentTitle)}" autofocus>
           <textarea class="edit-desc" rows="1">${escapeHtml(currentDesc)}</textarea>
           <div class="edit-actions">
-            <button class="btn-save" onclick="saveCardEdit('${id}')">Spara</button>
-            <button class="btn-cancel" onclick="cancelCardEdit('${id}')">Avbryt</button>
-            <button class="btn-delete" onclick="deleteAnyCard('${id}')">Ta bort</button>
+            <button class="btn-save" onclick="event.stopPropagation(); saveCardEdit('${id}')">Spara</button>
+            <button class="btn-cancel" onclick="event.stopPropagation(); cancelCardEdit('${id}')">Avbryt</button>
+            <button class="btn-delete" onclick="event.stopPropagation(); deleteAnyCard('${id}')">Ta bort</button>
           </div>
         </div>
       </div>
@@ -1162,8 +1162,8 @@
           <input class="edit-title" type="text" placeholder="Vad ska göras?" autofocus>
           <textarea class="edit-desc" placeholder="Detaljer (valfritt)" rows="1"></textarea>
           <div class="edit-actions">
-            <button class="btn-save" onclick="saveNewCard(this, '${section}')">Spara</button>
-            <button class="btn-cancel" onclick="cancelAdd(this)">Avbryt</button>
+            <button class="btn-save" onclick="event.stopPropagation(); saveNewCard(this, '${section}')">Spara</button>
+            <button class="btn-cancel" onclick="event.stopPropagation(); cancelAdd(this)">Avbryt</button>
           </div>
         </div>
       </div>
