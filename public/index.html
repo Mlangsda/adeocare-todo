@@ -519,6 +519,8 @@
     header h1 { font-size: 26px; }
   }
 </style>
+  .loading-msg { text-align: center; padding: 40px; color: var(--text-secondary); font-size: 15px; }
+</style>
 </head>
 <body>
 <div class="container">
@@ -538,479 +540,65 @@
   </header>
 
 
-  <!-- INKÖP -->
-  <div class="section" data-section="inkop">
-    <div class="section-header">
-      <div class="section-icon" style="background: rgba(139,106,175,0.1);">🛒</div>
-      <span class="section-title">Inköpslista</span>
-    </div>
-    <div class="cards-container">
-
-      <div class="card info-card" data-id="inkop-info" data-tag-color="" data-tag-text="">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Kolla alltid i kylen/frysen/skåpen innan ni handlar</div>
-            <div class="card-desc">Undvik dubbletter. Handla på onsdagar — inte tisdagar och torsdagar då Håkan har träning.</div>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('inkop-info')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('inkop-info')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="frukost" data-tag-color="yellow" data-tag-text="Veckovis">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Frukostvaror</div>
-            <div class="card-desc">Se bilder på köksbänken (mån–sön). Handla så det räcker för veckan.</div>
-            <span class="card-tag tag-yellow">Veckovis</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('frukost')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('frukost')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="froknacke" data-tag-color="purple" data-tag-text="Kolla om slut">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Fröknäcke</div>
-            <div class="card-desc">Se bild på diskbänken.</div>
-            <span class="card-tag tag-purple">Kolla om slut</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('froknacke')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('froknacke')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="ost" data-tag-color="purple" data-tag-text="Kolla om slut">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Skivad Edamer/Gouda</div>
-            <span class="card-tag tag-purple">Kolla om slut</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('ost')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('ost')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="glass" data-tag-color="purple" data-tag-text="Kolla om slut">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Glass</div>
-            <span class="card-tag tag-purple">Kolla om slut</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('glass')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('glass')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="frukt" data-tag-color="purple" data-tag-text="Kolla om slut">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Frukt</div>
-            <div class="card-desc">Kolla först att det inte ligger massa gammalt i fruktskålen i köket — släng gammalt.</div>
-            <span class="card-tag tag-purple">Kolla om slut</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('frukt')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('frukt')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="matavfall" data-tag-color="purple" data-tag-text="Kolla om slut">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Matavfallspåsar</div>
-            <span class="card-tag tag-purple">Kolla om slut</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('matavfall')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('matavfall')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="juice" data-tag-color="purple" data-tag-text="Kolla om slut">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Apelsinjuice Brämhults</div>
-            <div class="card-desc">Någon gång ibland.</div>
-            <span class="card-tag tag-purple">Kolla om slut</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('juice')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('juice')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="cola" data-tag-color="red" data-tag-text="Obs: bara sockerfri">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Cola Zero (utan socker)</div>
-            <div class="card-desc">Undvik vanlig Coca-Cola. Köp bara om Håkan vill ha.</div>
-            <span class="card-tag tag-red">Obs: bara sockerfri</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('cola')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('cola')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="cortimyk" data-tag-color="purple" data-tag-text="Kolla om slut">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Cortimyk salva (apoteket)</div>
-            <div class="card-desc">Receptfritt. Köp om salvan är slut.</div>
-            <span class="card-tag tag-purple">Kolla om slut</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('cortimyk')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('cortimyk')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="toapapper" data-tag-color="purple" data-tag-text="Kolla om slut">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Toapapper</div>
-            <div class="card-desc">Skåpet ovanför tvättmaskinen.</div>
-            <span class="card-tag tag-purple">Kolla om slut</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('toapapper')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('toapapper')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="hushallspapper" data-tag-color="purple" data-tag-text="Kolla om slut">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Hushållspapper</div>
-            <div class="card-desc">Skåpet i hallen högst upp — bredvid ingången, svarta korgar.</div>
-            <span class="card-tag tag-purple">Kolla om slut</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('hushallspapper')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('hushallspapper')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="hygien" data-tag-color="purple" data-tag-text="Kolla om slut">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Tandkräm + flytande tvål</div>
-            <div class="card-desc">Badrumsskåpet.</div>
-            <span class="card-tag tag-purple">Kolla om slut</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('hygien')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('hygien')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="tvattmedel" data-tag-color="purple" data-tag-text="Kolla om slut">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Tvättmedel + sköljmedel</div>
-            <div class="card-desc">Badrumsskåpet.</div>
-            <span class="card-tag tag-purple">Kolla om slut</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('tvattmedel')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('tvattmedel')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <button class="add-card-btn" onclick="showAddForm(this, 'inkop')">
-      <span class="add-icon">+</span> Lägg till vara
-    </button>
-  </div>
-
-  <!-- DAGLIGA TO-DOS -->
-  <div class="section" data-section="daily">
-    <div class="section-header">
-      <div class="section-icon" style="background: rgba(92,184,122,0.1);">📋</div>
-      <span class="section-title">Dagliga rutiner</span>
-    </div>
-    <div class="cards-container">
-
-      <div class="card" data-id="mobil-laddad" data-tag-color="green" data-tag-text="Varje dag">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Kolla att mobiltelefonen är laddad minst 40%</div>
-            <span class="card-tag tag-green">Varje dag</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('mobil-laddad')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('mobil-laddad')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="rena-klader" data-tag-color="green" data-tag-text="Varje dag">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Kolla rena underkläder/strumpor/vit t-shirt</div>
-            <div class="card-desc">Finns i vita byrån i sovrummet.</div>
-            <span class="card-tag tag-green">Varje dag</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('rena-klader')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('rena-klader')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="sopor" data-tag-color="green" data-tag-text="Löpande">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Sopsortering och matavfall</div>
-            <div class="card-desc">Kolla i den mån det går. Kasta sopor om det behövs.</div>
-            <span class="card-tag tag-green">Löpande</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('sopor')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('sopor')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="tork-tvatt" data-tag-color="green" data-tag-text="Löpande">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Kolla torktumlaren/tvättmaskinen</div>
-            <div class="card-desc">Kolla om något inte ligger kvar. Kika att filter i torktumlaren är ren (den lilla och den större på utsidan av tumlaren).</div>
-            <span class="card-tag tag-green">Löpande</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('tork-tvatt')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('tork-tvatt')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <button class="add-card-btn" onclick="showAddForm(this, 'daily')">
-      <span class="add-icon">+</span> Lägg till rutin
-    </button>
-  </div>
-
-  <!-- VECKOSCHEMA -->
-  <div class="section" data-section="weekly">
-    <div class="section-header">
-      <div class="section-icon" style="background: rgba(232,168,64,0.1);">📅</div>
-      <span class="section-title">Veckoschema</span>
-    </div>
-    <div class="cards-container">
-
-      <div class="card" data-id="traning-tisdag" data-tag-color="yellow" data-tag-text="Varje tisdag">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Tisdag — Packa träningsväska</div>
-            <div class="card-desc">Håkan har träning kl 12.</div>
-            <span class="card-tag tag-yellow">Varje tisdag</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('traning-tisdag')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('traning-tisdag')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="handla-onsdag" data-tag-color="yellow" data-tag-text="Varje onsdag">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Onsdag — Handla matvaror</div>
-            <div class="card-desc">Handla BARA på onsdagar — inte tisdag/torsdag (träningsdagar). Kolla i skåpen så ni inte handlar dubbletter!</div>
-            <span class="card-tag tag-yellow">Varje onsdag</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('handla-onsdag')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('handla-onsdag')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="dos-onsdag" data-tag-color="yellow" data-tag-text="Varannan onsdag (ojämna veckor)">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Onsdag (ojämna veckor) — Hämta Dos Påse</div>
-            <div class="card-desc">Apoteket på Karolinska Sjukhuset, huvudingången. Dosrullen ska placeras i lilla beige necessären på köksbordet.</div>
-            <span class="card-tag tag-yellow">Varannan onsdag (ojämna veckor)</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('dos-onsdag')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('dos-onsdag')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="tvatt-ljus" data-tag-color="yellow" data-tag-text="Varannan onsdag (jämna veckor)">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Onsdag (jämna veckor) — Tvätta sängkläder + ljusa kläder</div>
-            <span class="card-tag tag-yellow">Varannan onsdag (jämna veckor)</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('tvatt-ljus')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('tvatt-ljus')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="traning-torsdag" data-tag-color="yellow" data-tag-text="Varje torsdag">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Torsdag — Packa träningsväska</div>
-            <div class="card-desc">Håkan har träning kl 12.</div>
-            <span class="card-tag tag-yellow">Varje torsdag</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('traning-torsdag')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('traning-torsdag')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" data-id="tvatt-mork" data-tag-color="yellow" data-tag-text="Varannan torsdag (jämna veckor)">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Torsdag (jämna veckor) — Tvätta mörka kläder</div>
-            <span class="card-tag tag-yellow">Varannan torsdag (jämna veckor)</span>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('tvatt-mork')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('tvatt-mork')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <button class="add-card-btn" onclick="showAddForm(this, 'weekly')">
-      <span class="add-icon">+</span> Lägg till uppgift
-    </button>
-  </div>
-
-  <!-- VIKTIGT ATT TÄNKA PÅ -->
-  <div class="section" data-section="info">
-    <div class="section-header">
-      <div class="section-icon" style="background: rgba(212,80,80,0.1);">⚠️</div>
-      <span class="section-title">Viktigt att tänka på</span>
-    </div>
-    <div class="cards-container">
-
-      <div class="card info-card" data-id="vaska-info" data-tag-color="" data-tag-text="">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Håkans blå läder axelremsväska</div>
-            <div class="card-desc">Se till att Håkan INTE lägger saker i jackfickorna. I väskan ska alltid finnas: mobiltelefon, liten plånbok, och fastsatta hemnycklar.</div>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('vaska-info')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('vaska-info')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card info-card" data-id="kontakt-info" data-tag-color="" data-tag-text="">
-        <div class="card-top">
-          <div class="drag-handle" draggable="true"><span></span><span></span><span></span></div>
-          <div class="card-content">
-            <div class="card-title">Kontakt — Marzena Langsdale</div>
-            <div class="card-desc">Ring eller SMS:a vid minsta fråga. Marzena sitter ofta i möten — SMS är bäst. Tel: 070-6667922</div>
-          </div>
-          <div class="card-actions">
-            <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('kontakt-info')">redigera</span>
-            <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('kontakt-info')" title="Ta bort"></button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <button class="add-card-btn" onclick="showAddForm(this, 'info')">
-      <span class="add-icon">+</span> Lägg till anteckning
-    </button>
-  </div>
+  <div id="sections-root"><p class="loading-msg">Laddar...</p></div>
 
 </div>
 
-<footer>Privat — sparas lokalt i din webbläsare</footer>
+<footer>Sparas säkert i molnet (Supabase)</footer>
 
 <script>
-  const STORAGE_KEY = 'adeocare-todo-checklist';
-  const CUSTOM_KEY = 'adeocare-todo-custom-cards';
-  const DELETED_KEY = 'adeocare-todo-deleted-cards';
-  const EDITS_KEY = 'adeocare-todo-edited-cards';
-  const ORDER_KEY = 'adeocare-todo-order';
-  const TAGS_KEY = 'adeocare-todo-tags';
+  const SB_URL = 'https://dxixbtxywsvshthtiwgo.supabase.co';
+  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4aXhidHh5d3N2c2h0aHRpd2dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2NjE1MzgsImV4cCI6MjA4ODIzNzUzOH0.87q-gad0BtcRcYHKpsKNqoJ8wTo-8jLPUizGomLboB4';
+  const TABLE = 'adeocare_cards';
   const DELETE_SVG = '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="4.5" y1="4.5" x2="11.5" y2="11.5" stroke="#c4b8d4" stroke-width="1.3" stroke-linecap="round"/><line x1="11.5" y1="4.5" x2="4.5" y2="11.5" stroke="#c4b8d4" stroke-width="1.3" stroke-linecap="round"/><circle cx="4.5" cy="4.5" r="1" fill="#c4b8d4"/><circle cx="11.5" cy="4.5" r="1" fill="#c4b8d4"/><circle cx="4.5" cy="11.5" r="1" fill="#c4b8d4"/><circle cx="11.5" cy="11.5" r="1" fill="#c4b8d4"/></svg>';
   const DRAG_SVG = '<span></span><span></span><span></span>';
   const TAG_COLORS = ['green','yellow','purple','red','blue','pink'];
-  const SECTION_NAMES = { inkop: 'Inköpslista', daily: 'Dagliga rutiner', weekly: 'Veckoschema', info: 'Viktigt att tänka på' };
+  const SECTIONS = [
+    { key: 'inkop', icon: '🛒', iconBg: 'rgba(139,106,175,0.1)', title: 'Inköpslista', addLabel: 'Lägg till vara' },
+    { key: 'daily', icon: '📋', iconBg: 'rgba(92,184,122,0.1)', title: 'Dagliga rutiner', addLabel: 'Lägg till rutin' },
+    { key: 'weekly', icon: '📅', iconBg: 'rgba(232,168,64,0.1)', title: 'Veckoschema', addLabel: 'Lägg till uppgift' },
+    { key: 'info', icon: '⚠️', iconBg: 'rgba(212,80,80,0.1)', title: 'Viktigt att tänka på', addLabel: 'Lägg till anteckning' }
+  ];
+  const SECTION_NAMES = {}; SECTIONS.forEach(s => SECTION_NAMES[s.key] = s.title);
 
-  function loadState() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
-  function saveState(s) { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
-  function loadCustomCards() { try { return JSON.parse(localStorage.getItem(CUSTOM_KEY)) || []; } catch { return []; } }
-  function saveCustomCards(c) { localStorage.setItem(CUSTOM_KEY, JSON.stringify(c)); }
-  function loadDeleted() { try { return JSON.parse(localStorage.getItem(DELETED_KEY)) || []; } catch { return []; } }
-  function saveDeleted(a) { localStorage.setItem(DELETED_KEY, JSON.stringify(a)); }
-  function loadEdits() { try { return JSON.parse(localStorage.getItem(EDITS_KEY)) || {}; } catch { return {}; } }
-  function saveEdits(e) { localStorage.setItem(EDITS_KEY, JSON.stringify(e)); }
-  function loadOrder() { try { return JSON.parse(localStorage.getItem(ORDER_KEY)) || {}; } catch { return {}; } }
-  function saveOrder(o) { localStorage.setItem(ORDER_KEY, JSON.stringify(o)); }
-  function loadTags() { try { return JSON.parse(localStorage.getItem(TAGS_KEY)) || {}; } catch { return {}; } }
-  function saveTags(t) { localStorage.setItem(TAGS_KEY, JSON.stringify(t)); }
+  // --- Supabase REST helpers ---
+  async function sbFetch(path, opts = {}) {
+    const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
+      ...opts,
+      headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', Prefer: opts.prefer || 'return=representation', ...opts.headers }
+    });
+    if (!res.ok) { console.error('Supabase error', res.status, await res.text()); return null; }
+    const text = await res.text();
+    return text ? JSON.parse(text) : null;
+  }
 
-  // --- Tag helpers ---
-  function getTagForCard(id) {
-    const saved = loadTags();
-    if (saved[id]) return saved[id];
-    const card = document.querySelector(`.card[data-id="${id}"]`);
-    if (card) return { color: card.dataset.tagColor || '', text: card.dataset.tagText || '' };
-    return { color: '', text: '' };
+  async function loadCards() {
+    return await sbFetch(`${TABLE}?select=*&order=section,sort_order`) || [];
+  }
+
+  async function insertCard(data) {
+    return await sbFetch(TABLE, { method: 'POST', body: JSON.stringify(data) });
+  }
+
+  async function updateCard(id, data) {
+    data.updated_at = new Date().toISOString();
+    return await sbFetch(`${TABLE}?id=eq.${encodeURIComponent(id)}`, { method: 'PATCH', body: JSON.stringify(data) });
+  }
+
+  async function deleteCard(id) {
+    return await sbFetch(`${TABLE}?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
+  }
+
+  // In-memory card cache
+  let allCards = [];
+
+  // --- Utilities ---
+  function escapeHtml(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
+  function escapeAttr(str) { return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+
+  function renderTagHTML(color, text) {
+    if (!color || !text) return '';
+    return `<span class="card-tag tag-${escapeHtml(color)}">${escapeHtml(text)}</span>`;
   }
 
   function tagPickerHTML(selectedColor, tagText) {
@@ -1019,13 +607,7 @@
       return `<div class="tag-color-dot dot-${c}${sel}" data-color="${c === 'none' ? '' : c}" onclick="event.stopPropagation(); selectTagColor(this)"></div>`;
     }).join('');
     const showInput = selectedColor ? '' : ' style="display:none"';
-    return `
-      <div class="tag-picker">
-        <span class="tag-picker-label">Tagg:</span>
-        ${dots}
-        <input class="tag-text-input" type="text" placeholder="Tagg-text..." value="${escapeAttr(tagText || '')}"${showInput} onclick="event.stopPropagation()">
-      </div>
-    `;
+    return `<div class="tag-picker"><span class="tag-picker-label">Tagg:</span>${dots}<input class="tag-text-input" type="text" placeholder="Tagg-text..." value="${escapeAttr(tagText || '')}"${showInput} onclick="event.stopPropagation()"></div>`;
   }
 
   function selectTagColor(dot) {
@@ -1033,59 +615,54 @@
     picker.querySelectorAll('.tag-color-dot').forEach(d => d.classList.remove('selected'));
     dot.classList.add('selected');
     const input = picker.querySelector('.tag-text-input');
-    if (dot.dataset.color) {
-      input.style.display = '';
-      input.focus();
-    } else {
-      input.style.display = 'none';
-      input.value = '';
-    }
+    if (dot.dataset.color) { input.style.display = ''; input.focus(); }
+    else { input.style.display = 'none'; input.value = ''; }
   }
 
   function getTagFromPicker(card) {
     const picker = card.querySelector('.tag-picker');
     if (!picker) return { color: '', text: '' };
     const selected = picker.querySelector('.tag-color-dot.selected');
-    const color = selected ? (selected.dataset.color || '') : '';
-    const text = picker.querySelector('.tag-text-input').value.trim();
-    return { color, text };
+    return { color: selected ? (selected.dataset.color || '') : '', text: picker.querySelector('.tag-text-input').value.trim() };
   }
 
-  function renderTagHTML(color, text) {
-    if (!color || !text) return '';
-    return `<span class="card-tag tag-${escapeHtml(color)}">${escapeHtml(text)}</span>`;
-  }
-
-  // --- Section picker for moving cards ---
   function sectionPickerHTML(currentSection) {
-    const options = Object.keys(SECTION_NAMES).map(key => {
-      const sel = key === currentSection ? ' selected' : '';
-      return `<option value="${key}"${sel}>${SECTION_NAMES[key]}</option>`;
-    }).join('');
-    return `
-      <div class="move-section-picker">
-        <label>Flytta till:</label>
-        <select onclick="event.stopPropagation()">${options}</select>
-      </div>
-    `;
+    const options = Object.keys(SECTION_NAMES).map(key => `<option value="${key}"${key === currentSection ? ' selected' : ''}>${SECTION_NAMES[key]}</option>`).join('');
+    return `<div class="move-section-picker"><label>Flytta till:</label><select onclick="event.stopPropagation()">${options}</select></div>`;
   }
 
-  // --- Render a card from data ---
   function renderCardHTML(id, title, desc, tagColor, tagText) {
-    return `
-      <div class="card-top">
-        <div class="drag-handle" draggable="true">${DRAG_SVG}</div>
-        <div class="card-content">
-          <div class="card-title">${escapeHtml(title)}</div>
-          ${desc ? '<div class="card-desc">' + escapeHtml(desc) + '</div>' : ''}
-          ${renderTagHTML(tagColor, tagText)}
-        </div>
-        <div class="card-actions">
-          <span class="card-edit-hint" onclick="event.stopPropagation(); editCard('${id}')">redigera</span>
-          <button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('${id}')" title="Ta bort">${DELETE_SVG}</button>
-        </div>
-      </div>
-    `;
+    return `<div class="card-top"><div class="drag-handle" draggable="true">${DRAG_SVG}</div><div class="card-content"><div class="card-title">${escapeHtml(title)}</div>${desc ? '<div class="card-desc">' + escapeHtml(desc) + '</div>' : ''}${renderTagHTML(tagColor, tagText)}</div><div class="card-actions"><span class="card-edit-hint" onclick="event.stopPropagation(); editCard('${escapeAttr(id)}')">redigera</span><button class="card-delete" onclick="event.stopPropagation(); deleteAnyCard('${escapeAttr(id)}')" title="Ta bort">${DELETE_SVG}</button></div></div>`;
+  }
+
+  // --- Build sections from data ---
+  function renderAll(cards) {
+    allCards = cards;
+    const root = document.getElementById('sections-root');
+    root.innerHTML = '';
+
+    SECTIONS.forEach(sec => {
+      const sectionCards = cards.filter(c => c.section === sec.key).sort((a, b) => a.sort_order - b.sort_order);
+
+      const sectionEl = document.createElement('div');
+      sectionEl.className = 'section';
+      sectionEl.dataset.section = sec.key;
+      sectionEl.innerHTML = `<div class="section-header"><div class="section-icon" style="background: ${sec.iconBg};">${sec.icon}</div><span class="section-title">${sec.title}</span></div><div class="cards-container"></div><button class="add-card-btn" onclick="showAddForm(this, '${sec.key}')"><span class="add-icon">+</span> ${sec.addLabel}</button>`;
+
+      const container = sectionEl.querySelector('.cards-container');
+      sectionCards.forEach(data => {
+        const card = document.createElement('div');
+        card.className = 'card' + (data.is_info_card ? ' info-card' : '');
+        card.dataset.id = data.id;
+        card.innerHTML = renderCardHTML(data.id, data.title, data.description || '', data.tag_color || '', data.tag_text || '');
+        container.appendChild(card);
+        initDragForCard(card);
+      });
+
+      root.appendChild(sectionEl);
+    });
+
+    initContainerDrop();
   }
 
   // --- Edit card ---
@@ -1096,203 +673,106 @@
     const currentTitle = card.querySelector('.card-title').textContent;
     const currentDesc = card.querySelector('.card-desc') ? card.querySelector('.card-desc').textContent : '';
     const section = card.closest('.section').dataset.section;
-    const tag = getTagForCard(id);
+    const data = allCards.find(c => c.id === id) || {};
 
     card.className = 'card editing';
-    card.onclick = null;
-    card.setAttribute('draggable', 'false');
-    card.innerHTML = `
-      <div class="card-top">
-        <div class="card-content">
-          <input class="edit-title" type="text" value="${escapeAttr(currentTitle)}" autofocus onclick="event.stopPropagation()">
-          <textarea class="edit-desc" rows="1" onclick="event.stopPropagation()">${escapeHtml(currentDesc)}</textarea>
-          ${tagPickerHTML(tag.color, tag.text)}
-          ${sectionPickerHTML(section)}
-          <div class="edit-actions">
-            <button class="btn-save" onclick="event.stopPropagation(); saveCardEdit('${id}')">Spara</button>
-            <button class="btn-cancel" onclick="event.stopPropagation(); cancelCardEdit('${id}')">Avbryt</button>
-            <button class="btn-delete" onclick="event.stopPropagation(); deleteAnyCard('${id}')">Ta bort</button>
-          </div>
-        </div>
-      </div>
-    `;
+    card.innerHTML = `<div class="card-top"><div class="card-content"><input class="edit-title" type="text" value="${escapeAttr(currentTitle)}" autofocus onclick="event.stopPropagation()"><textarea class="edit-desc" rows="1" onclick="event.stopPropagation()">${escapeHtml(currentDesc)}</textarea>${tagPickerHTML(data.tag_color || '', data.tag_text || '')}${sectionPickerHTML(section)}<div class="edit-actions"><button class="btn-save" onclick="event.stopPropagation(); saveCardEdit('${escapeAttr(id)}')">Spara</button><button class="btn-cancel" onclick="event.stopPropagation(); cancelCardEdit('${escapeAttr(id)}')">Avbryt</button><button class="btn-delete" onclick="event.stopPropagation(); deleteAnyCard('${escapeAttr(id)}')">Ta bort</button></div></div></div>`;
 
     const textarea = card.querySelector('.edit-desc');
     textarea.style.height = textarea.scrollHeight + 'px';
     textarea.addEventListener('input', function() { this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px'; });
-
-    card.querySelector('.edit-title').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') { e.preventDefault(); saveCardEdit(id); }
-      if (e.key === 'Escape') cancelCardEdit(id);
-    });
-
+    card.querySelector('.edit-title').addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); saveCardEdit(id); } if (e.key === 'Escape') cancelCardEdit(id); });
     card.querySelector('.edit-title').focus();
   }
 
-  function saveCardEdit(id) {
+  async function saveCardEdit(id) {
     const card = document.querySelector(`.card[data-id="${id}"]`);
     const title = card.querySelector('.edit-title').value.trim();
     const desc = card.querySelector('.edit-desc').value.trim();
     if (!title) { card.querySelector('.edit-title').focus(); return; }
 
-    const isCustom = id.startsWith('custom-');
     const oldSection = card.closest('.section').dataset.section;
     const newSection = card.querySelector('.move-section-picker select').value;
     const isInfoCard = id.endsWith('-info');
     const tag = getTagFromPicker(card);
 
-    // Save tag
-    const tags = loadTags();
-    tags[id] = tag;
-    saveTags(tags);
-    card.dataset.tagColor = tag.color;
-    card.dataset.tagText = tag.text;
+    // Update Supabase
+    await updateCard(id, { title, description: desc, section: newSection, tag_color: tag.color, tag_text: tag.text, is_info_card: isInfoCard });
 
-    if (isCustom) {
-      const customs = loadCustomCards();
-      const data = customs.find(c => c.id === id);
-      if (data) { data.title = title; data.desc = desc; data.section = newSection; data.tagColor = tag.color; data.tagText = tag.text; }
-      saveCustomCards(customs);
-    } else {
-      const edits = loadEdits();
-      edits[id] = { title, desc };
-      saveEdits(edits);
-    }
+    // Update local cache
+    const cached = allCards.find(c => c.id === id);
+    if (cached) { cached.title = title; cached.description = desc; cached.section = newSection; cached.tag_color = tag.color; cached.tag_text = tag.text; }
 
-    card.className = 'card' + (isCustom ? ' custom' : '') + (isInfoCard ? ' info-card' : '');
-    card.onclick = null;
+    card.className = 'card' + (isInfoCard ? ' info-card' : '');
     card.innerHTML = renderCardHTML(id, title, desc, tag.color, tag.text);
     initDragForCard(card);
 
-    // Move to new section if changed
     if (newSection !== oldSection) {
       const newContainer = document.querySelector(`.section[data-section="${newSection}"] .cards-container`);
-      if (newContainer) {
-        newContainer.appendChild(card);
-        saveCurrentOrder();
-      }
+      if (newContainer) { newContainer.appendChild(card); await saveCurrentOrder(); }
     }
   }
 
   function cancelCardEdit(id) {
     const card = document.querySelector(`.card[data-id="${id}"]`);
-    const isCustom = id.startsWith('custom-');
-    const isInfoCard = id.endsWith('-info');
-    let title, desc;
+    const data = allCards.find(c => c.id === id);
+    if (!data) return;
 
-    if (isCustom) {
-      const customs = loadCustomCards();
-      const data = customs.find(c => c.id === id);
-      if (!data) return;
-      title = data.title; desc = data.desc || '';
-    } else {
-      const edits = loadEdits();
-      if (edits[id]) { title = edits[id].title; desc = edits[id].desc || ''; }
-      else { title = card.querySelector('.edit-title').defaultValue; desc = card.querySelector('.edit-desc').defaultValue; }
-    }
-
-    const tag = getTagForCard(id);
-    card.className = 'card' + (isCustom ? ' custom' : '') + (isInfoCard ? ' info-card' : '');
-    card.onclick = null;
-    card.innerHTML = renderCardHTML(id, title, desc, tag.color, tag.text);
+    card.className = 'card' + (data.is_info_card ? ' info-card' : '');
+    card.innerHTML = renderCardHTML(id, data.title, data.description || '', data.tag_color || '', data.tag_text || '');
     initDragForCard(card);
   }
 
-  function deleteAnyCard(id) {
+  async function deleteAnyCard(id) {
     const card = document.querySelector(`.card[data-id="${id}"]`);
     if (!card) return;
+
     card.style.transition = 'opacity 0.3s, transform 0.3s';
     card.style.opacity = '0';
     card.style.transform = 'translateX(20px)';
-    setTimeout(() => { card.remove(); saveCurrentOrder(); }, 300);
+    setTimeout(() => card.remove(), 300);
 
-    let customs = loadCustomCards();
-    if (customs.find(c => c.id === id)) {
-      customs = customs.filter(c => c.id !== id);
-      saveCustomCards(customs);
-    } else {
-      const deleted = loadDeleted();
-      if (!deleted.includes(id)) deleted.push(id);
-      saveDeleted(deleted);
-      const edits = loadEdits();
-      delete edits[id];
-      saveEdits(edits);
-    }
-
-    const state = loadState();
-    delete state[id];
-    saveState(state);
-
-    const tags = loadTags();
-    delete tags[id];
-    saveTags(tags);
+    await deleteCard(id);
+    allCards = allCards.filter(c => c.id !== id);
   }
-
 
   // --- Add new card ---
   function showAddForm(btn, section) {
-    if (btn.previousElementSibling && btn.previousElementSibling.classList.contains('editing')) return;
+    const container = btn.closest('.section').querySelector('.cards-container');
+    if (container.lastElementChild && container.lastElementChild.classList.contains('editing')) return;
 
     const card = document.createElement('div');
     card.className = 'card editing';
-    card.innerHTML = `
-      <div class="card-top">
-        <div class="card-content">
-          <input class="edit-title" type="text" placeholder="Vad ska göras?" autofocus onclick="event.stopPropagation()">
-          <textarea class="edit-desc" placeholder="Detaljer (valfritt)" rows="1" onclick="event.stopPropagation()"></textarea>
-          ${tagPickerHTML('', '')}
-          <div class="edit-actions">
-            <button class="btn-save" onclick="event.stopPropagation(); saveNewCard(this, '${section}')">Spara</button>
-            <button class="btn-cancel" onclick="event.stopPropagation(); cancelAdd(this)">Avbryt</button>
-          </div>
-        </div>
-      </div>
-    `;
+    card.innerHTML = `<div class="card-top"><div class="card-content"><input class="edit-title" type="text" placeholder="Vad ska göras?" autofocus onclick="event.stopPropagation()"><textarea class="edit-desc" placeholder="Detaljer (valfritt)" rows="1" onclick="event.stopPropagation()"></textarea>${tagPickerHTML('', '')}<div class="edit-actions"><button class="btn-save" onclick="event.stopPropagation(); saveNewCard(this, '${section}')">Spara</button><button class="btn-cancel" onclick="event.stopPropagation(); cancelAdd(this)">Avbryt</button></div></div></div>`;
 
-    const container = btn.closest('.section').querySelector('.cards-container');
     container.appendChild(card);
 
     const textarea = card.querySelector('.edit-desc');
     textarea.addEventListener('input', function() { this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px'; });
-
-    card.querySelector('.edit-title').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') { e.preventDefault(); saveNewCard(card.querySelector('.btn-save'), section); }
-      if (e.key === 'Escape') cancelAdd(card.querySelector('.btn-cancel'));
-    });
-
-    textarea.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') cancelAdd(card.querySelector('.btn-cancel'));
-    });
-
+    card.querySelector('.edit-title').addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); saveNewCard(card.querySelector('.btn-save'), section); } if (e.key === 'Escape') cancelAdd(card.querySelector('.btn-cancel')); });
+    textarea.addEventListener('keydown', function(e) { if (e.key === 'Escape') cancelAdd(card.querySelector('.btn-cancel')); });
     card.querySelector('.edit-title').focus();
   }
 
-  function saveNewCard(btn, section) {
+  async function saveNewCard(btn, section) {
     const card = btn.closest('.card');
     const title = card.querySelector('.edit-title').value.trim();
     const desc = card.querySelector('.edit-desc').value.trim();
     if (!title) { card.querySelector('.edit-title').focus(); return; }
 
-    const id = 'custom-' + Date.now();
+    const id = 'card-' + Date.now();
     const tag = getTagFromPicker(card);
+    const sectionCards = allCards.filter(c => c.section === section);
+    const sortOrder = sectionCards.length > 0 ? Math.max(...sectionCards.map(c => c.sort_order)) + 1 : 0;
 
-    const customs = loadCustomCards();
-    customs.push({ id, title, desc, section, tagColor: tag.color, tagText: tag.text });
-    saveCustomCards(customs);
+    const newCard = { id, title, description: desc, section, tag_color: tag.color, tag_text: tag.text, sort_order: sortOrder, is_info_card: false };
+    await insertCard(newCard);
+    allCards.push(newCard);
 
-    const tags = loadTags();
-    tags[id] = tag;
-    saveTags(tags);
-
-    card.className = 'card custom';
+    card.className = 'card';
     card.dataset.id = id;
-    card.dataset.tagColor = tag.color;
-    card.dataset.tagText = tag.text;
-    card.onclick = null;
     card.innerHTML = renderCardHTML(id, title, desc, tag.color, tag.text);
     initDragForCard(card);
-
-    saveCurrentOrder();
   }
 
   function cancelAdd(btn) { btn.closest('.card').remove(); }
@@ -1320,76 +800,43 @@
     });
 
     card.addEventListener('dragover', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+      e.preventDefault(); e.stopPropagation();
       if (!draggedCard || draggedCard === card) return;
       e.dataTransfer.dropEffect = 'move';
       document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
       card.classList.add('drag-over');
     });
 
-    card.addEventListener('dragleave', function() {
-      card.classList.remove('drag-over');
-    });
+    card.addEventListener('dragleave', function() { card.classList.remove('drag-over'); });
 
     card.addEventListener('drop', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+      e.preventDefault(); e.stopPropagation();
       card.classList.remove('drag-over');
       if (!draggedCard || draggedCard === card) return;
-
       const container = card.closest('.cards-container');
       container.insertBefore(draggedCard, card);
       draggedCard.classList.remove('dragging');
-
-      // Update custom card section if moved between sections
-      const newSection = container.closest('.section').dataset.section;
-      const dragId = draggedCard.dataset.id;
-      if (dragId && dragId.startsWith('custom-')) {
-        const customs = loadCustomCards();
-        const data = customs.find(c => c.id === dragId);
-        if (data) { data.section = newSection; saveCustomCards(customs); }
-      }
-
       saveCurrentOrder();
       draggedCard = null;
     });
   }
 
-  // Allow dropping on empty containers
   function initContainerDrop() {
     document.querySelectorAll('.cards-container').forEach(container => {
       container.addEventListener('dragover', function(e) {
         e.preventDefault();
         if (!draggedCard) return;
         e.dataTransfer.dropEffect = 'move';
-        if (container.querySelectorAll('.card:not(.dragging)').length === 0) {
-          container.classList.add('drag-over-empty');
-        }
+        if (container.querySelectorAll('.card:not(.dragging)').length === 0) container.classList.add('drag-over-empty');
       });
-
-      container.addEventListener('dragleave', function() {
-        container.classList.remove('drag-over-empty');
-      });
-
+      container.addEventListener('dragleave', function() { container.classList.remove('drag-over-empty'); });
       container.addEventListener('drop', function(e) {
         e.preventDefault();
         container.classList.remove('drag-over-empty');
         if (!draggedCard) return;
-
-        // Only append if dropped on the container itself (not a card)
         if (e.target === container || e.target.closest('.cards-container') === container) {
           container.appendChild(draggedCard);
           draggedCard.classList.remove('dragging');
-
-          const newSection = container.closest('.section').dataset.section;
-          const dragId = draggedCard.dataset.id;
-          if (dragId && dragId.startsWith('custom-')) {
-            const customs = loadCustomCards();
-            const data = customs.find(c => c.id === dragId);
-            if (data) { data.section = newSection; saveCustomCards(customs); }
-          }
-
           saveCurrentOrder();
           draggedCard = null;
         }
@@ -1397,109 +844,29 @@
     });
   }
 
-  // --- Order persistence ---
-  function saveCurrentOrder() {
-    const order = {};
+  // --- Save order to Supabase ---
+  async function saveCurrentOrder() {
+    const updates = [];
     document.querySelectorAll('.section').forEach(section => {
       const sectionKey = section.dataset.section;
-      const ids = [];
+      let order = 0;
       section.querySelectorAll('.cards-container .card[data-id]').forEach(card => {
-        ids.push(card.dataset.id);
-      });
-      order[sectionKey] = ids;
-    });
-    saveOrder(order);
-  }
-
-  function applyOrder() {
-    const order = loadOrder();
-    if (!Object.keys(order).length) return;
-
-    Object.keys(order).forEach(sectionKey => {
-      const section = document.querySelector(`.section[data-section="${sectionKey}"]`);
-      if (!section) return;
-      const container = section.querySelector('.cards-container');
-      const ids = order[sectionKey];
-
-      ids.forEach(id => {
-        const card = document.querySelector(`.card[data-id="${id}"]`);
-        if (card) container.appendChild(card);
+        const id = card.dataset.id;
+        updates.push({ id, section: sectionKey, sort_order: order });
+        const cached = allCards.find(c => c.id === id);
+        if (cached) { cached.section = sectionKey; cached.sort_order = order; }
+        order++;
       });
     });
-  }
 
-  // --- Utilities ---
-  function escapeHtml(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
-  function escapeAttr(str) { return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+    // Batch update via individual PATCH calls (Supabase REST doesn't support bulk upsert easily)
+    await Promise.all(updates.map(u => updateCard(u.id, { section: u.section, sort_order: u.sort_order })));
+  }
 
   // --- Init ---
-  (function() {
-    const state = loadState();
-    const deleted = loadDeleted();
-
-    // Inject delete SVG and init drag
-    document.querySelectorAll('.card-delete').forEach(btn => { btn.innerHTML = DELETE_SVG; });
-
-    // Hide deleted built-in cards
-    deleted.forEach(id => {
-      const card = document.querySelector(`.card[data-id="${id}"]`);
-      if (card) card.remove();
-    });
-
-    // Apply saved edits
-    const edits = loadEdits();
-    Object.keys(edits).forEach(id => {
-      const card = document.querySelector(`.card[data-id="${id}"]`);
-      if (!card) return;
-      const titleEl = card.querySelector('.card-title');
-      const descEl = card.querySelector('.card-desc');
-      if (titleEl) titleEl.textContent = edits[id].title;
-      if (descEl && edits[id].desc) descEl.textContent = edits[id].desc;
-      else if (!descEl && edits[id].desc) { const d = document.createElement('div'); d.className = 'card-desc'; d.textContent = edits[id].desc; titleEl.after(d); }
-      else if (descEl && !edits[id].desc) descEl.remove();
-    });
-
-    // Apply saved tags to built-in cards
-    const savedTags = loadTags();
-    Object.keys(savedTags).forEach(id => {
-      const card = document.querySelector(`.card[data-id="${id}"]`);
-      if (!card || id.startsWith('custom-')) return;
-      const tag = savedTags[id];
-      card.dataset.tagColor = tag.color;
-      card.dataset.tagText = tag.text;
-      const existingTag = card.querySelector('.card-tag');
-      if (tag.color && tag.text) {
-        if (existingTag) { existingTag.className = 'card-tag tag-' + tag.color; existingTag.textContent = tag.text; }
-        else { const content = card.querySelector('.card-content'); const span = document.createElement('span'); span.className = 'card-tag tag-' + tag.color; span.textContent = tag.text; content.appendChild(span); }
-      } else if (existingTag) {
-        existingTag.remove();
-      }
-    });
-
-    // Restore custom cards
-    const customs = loadCustomCards();
-    customs.forEach(data => {
-      const section = document.querySelector(`.section[data-section="${data.section}"]`);
-      if (!section) return;
-      const container = section.querySelector('.cards-container');
-      const tag = savedTags[data.id] || { color: data.tagColor || '', text: data.tagText || '' };
-
-      const card = document.createElement('div');
-      card.className = 'card custom';
-      card.dataset.id = data.id;
-      card.dataset.tagColor = tag.color;
-      card.dataset.tagText = tag.text;
-      card.onclick = null;
-      card.innerHTML = renderCardHTML(data.id, data.title, data.desc, tag.color, tag.text);
-      container.appendChild(card);
-    });
-
-    // Apply saved order (moves cards between sections + reorders)
-    applyOrder();
-
-    // Init drag on all cards
-    document.querySelectorAll('.card[data-id]').forEach(initDragForCard);
-    initContainerDrop();
+  (async function() {
+    const cards = await loadCards();
+    renderAll(cards);
   })();
 </script>
 </body>
