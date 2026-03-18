@@ -863,10 +863,96 @@
     await Promise.all(updates.map(u => updateCard(u.id, { section: u.section, sort_order: u.sort_order })));
   }
 
+  // --- Recovery: migrate localStorage data that was missed ---
+  async function recoverLocalStorage() {
+    const CUSTOM_KEY = 'adeocare-todo-custom-cards';
+    const EDITS_KEY = 'adeocare-todo-edited-cards';
+    const TAGS_KEY = 'adeocare-todo-tags';
+    const RECOVERED_KEY = 'adeocare-todo-recovered';
+
+    // Only run once
+    if (localStorage.getItem(RECOVERED_KEY)) return { custom: [], edits: {} };
+
+    let custom = [];
+    let edits = {};
+    let tags = {};
+
+    try { custom = JSON.parse(localStorage.getItem(CUSTOM_KEY)) || []; } catch {}
+    try { edits = JSON.parse(localStorage.getItem(EDITS_KEY)) || {}; } catch {}
+    try { tags = JSON.parse(localStorage.getItem(TAGS_KEY)) || {}; } catch {}
+
+    const hasData = custom.length > 0 || Object.keys(edits).length > 0;
+    if (!hasData) {
+      localStorage.setItem(RECOVERED_KEY, 'no-data');
+      return { custom, edits };
+    }
+
+    // Show recovery banner
+    const banner = document.createElement('div');
+    banner.style.cssText = 'background:#8b6aaf;color:white;padding:16px 20px;border-radius:12px;margin-bottom:24px;font-size:14px;line-height:1.6;';
+    banner.innerHTML = '<strong>Hittade sparad data i din webbläsare!</strong><br>';
+
+    // Migrate custom cards to Supabase
+    const existingCards = await loadCards();
+    const existingIds = new Set(existingCards.map(c => c.id));
+    let recovered = 0;
+
+    for (const card of custom) {
+      if (existingIds.has(card.id)) continue;
+      const tag = tags[card.id] || {};
+      const newCard = {
+        id: card.id,
+        title: card.title || card.label || 'Utan titel',
+        description: card.desc || card.description || '',
+        section: card.section || 'inkop',
+        tag_color: tag.color || '',
+        tag_text: tag.text || '',
+        sort_order: 999 + recovered,
+        is_info_card: false
+      };
+      await insertCard(newCard);
+      recovered++;
+      banner.innerHTML += `Återställd: <strong>${escapeHtml(newCard.title)}</strong> (${SECTION_NAMES[newCard.section] || newCard.section})<br>`;
+    }
+
+    // Apply edits to existing cards
+    let edited = 0;
+    for (const [id, edit] of Object.entries(edits)) {
+      if (!existingIds.has(id)) continue;
+      const updates = {};
+      if (edit.title) updates.title = edit.title;
+      if (edit.desc || edit.description) updates.description = edit.desc || edit.description;
+      if (Object.keys(updates).length > 0) {
+        await updateCard(id, updates);
+        edited++;
+        banner.innerHTML += `Uppdaterad: <strong>${escapeHtml(updates.title || id)}</strong><br>`;
+      }
+    }
+
+    if (recovered === 0 && edited === 0) {
+      banner.innerHTML += 'Ingen ny data att återställa (allt fanns redan i databasen).';
+    } else {
+      banner.innerHTML += `<br>Totalt: ${recovered} nya poster + ${edited} uppdateringar återställda till Supabase.`;
+    }
+
+    const root = document.getElementById('sections-root');
+    root.parentNode.insertBefore(banner, root);
+
+    localStorage.setItem(RECOVERED_KEY, JSON.stringify({ recovered, edited, timestamp: new Date().toISOString() }));
+    return { custom, edits, recovered, edited };
+  }
+
   // --- Init ---
   (async function() {
     const cards = await loadCards();
     renderAll(cards);
+    // Try to recover old localStorage data
+    const result = await recoverLocalStorage();
+    if (result.recovered > 0 || result.edited > 0) {
+      // Reload to show recovered data
+      const freshCards = await loadCards();
+      renderAll(freshCards);
+    }
   })();
 </script>
 </body>
